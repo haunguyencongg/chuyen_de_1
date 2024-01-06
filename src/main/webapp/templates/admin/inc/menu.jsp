@@ -37,7 +37,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="<%=request.getContextPath()%>/admin/inScore" class="nav-link active">
+            <a href="<%=request.getContextPath()%>/diem" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Nhập điểm
@@ -54,7 +54,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<%=request.getContextPath()%>/admin/giangvien" class="nav-link">
+            <a href="<%=request.getContextPath()%>/giang-vien" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Giảng Viên
@@ -73,19 +73,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<%=request.getContextPath()%>/admin/hocky" class="nav-link">
+                <a href="<%=request.getContextPath()%>/hoc-ky" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Học Kỳ</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<%=request.getContextPath()%>/admin/namhoc" class="nav-link">
+                <a href="<%=request.getContextPath()%>/nam-hoc" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Năm học</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<%=request.getContextPath()%>/admin/nienkhoa" class="nav-link">
+                <a href="<%=request.getContextPath()%>/nien-khoa" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Niên Khóa</p>
                 </a>

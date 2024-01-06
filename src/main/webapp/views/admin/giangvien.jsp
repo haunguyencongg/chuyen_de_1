@@ -18,12 +18,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sinh viên</h1>
+            <h1 class="m-0">Giảng viên</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-              <li class="breadcrumb-item active">Sinh viên</li>
+              <li class="breadcrumb-item active">Giảng viên</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -63,28 +63,26 @@
 	  <thead class="thead-CCFFFF">
 	    <tr class="list-header">
 	      <th scope="col">#</th>
-	      <th scope="col">Mã Sinh viên</th>
-	      <th scope="col">Tên Sinh viên</th>
+	      <th scope="col">Mã Giảng viên</th>
+	      <th scope="col">Tên Giảng viên</th>
 	      <th scope="col">Địa chỉ</th>
 	      <th scope="col">Số điện thoại</th>
-	      <th scope="col">Lớp</th>
 	      <th scope="col">Chức năng</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	  <%
-	  if(request.getAttribute("sinhvienList") != null){
-		  List<sinhvien> sinhvienList = (List<sinhvien>) request.getAttribute("sinhvienList");
-		  if(sinhvienList.size() > 0){
-			  for(sinhvien objSV : sinhvienList){
+	  if(request.getAttribute("giangvienList") != null){
+		  List<giangvien> giangvienList = (List<giangvien>) request.getAttribute("giangvienList");
+		  if(giangvienList.size() > 0){
+			  for(giangvien objGV : giangvienList){
 				  %>
 		<tr class="tr-hover">
 	      <th scope="row"><input type="checkbox" name="vehicle1" value="Bike"></th>
-	      <td><%=objSV.getMaSV() %></td>
-	      <td><%=objSV.getTenSV() %></td>
-	      <td><%=objSV.getDiaChi() %></td>
-	      <td><%=objSV.getSdt() %></td>
-	      <td><%=objSV.getLop().getTenLop() %></td>
+	      <td><%=objGV.getMaGV() %></td>
+	      <td><%=objGV.getTenGV() %></td>
+	      <td><%=objGV.getDiaChi() %></td>
+	      <td><%=objGV.getSdt() %></td>
 	     <td>
 	    	<%-- <button type="button" class="btn btn-warning suaMenu" data-toggle="modal" data-target="#exampleModalSua">
 				<a href="<%=request.getContextPath()%>/admin/menu/edit?id=">Cập nhật</a>
@@ -109,21 +107,21 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Thêm sinh viên</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Thêm Giảng Viên</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action ="<%=request.getContextPath()%>/sinh-vien" method="post">
+        <form action ="<%=request.getContextPath()%>/giang-vien" method="post">
         
         	<div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Mã sinh viên</label>
-			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="masv">
+			    <label for="exampleFormControlFile1" class="col-sm-3">Mã Giảng viên</label>
+			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="magv">
 			  </div>
 			  <div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Tên sinh viên</label>
-			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="tensv">
+			    <label for="exampleFormControlFile1" class="col-sm-3">Tên Giảng viên</label>
+			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="tengv">
 			  </div>
 			  <div class="form-group row">
 			    <label for="exampleFormControlFile1" class="col-sm-3">Địa chỉ</label>
@@ -136,27 +134,6 @@
 			  <div class="form-group row">
 			    <label for="exampleFormControlFile1" class="col-sm-3">Email</label>
 			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="email">
-			  </div>
-			  <div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Lớp</label>
-			    <%
-			    	if(request.getAttribute("lopList") != null){
-			    		List<Lop> lopList = (List<Lop>) request.getAttribute("lopList");
-			    		if(lopList.size() > 0){
-			    			%>
-			    <select class="form-control" id="exampleFormControlSelect1" name="malop">
-			    <%
-			    	for(Lop objLop : lopList){
-			    		%>
-			    	<option value="<%=objLop.getMaLop()%>"><%=objLop.getTenLop()%></option>
-			    		<%
-			    	}
-			    %>
-			    </select>
-			    			<%
-			    		}
-			    	}
-			    %>
 			  </div>
 			<div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>

@@ -1,8 +1,9 @@
+<%@page import="models.NienKhoa"%>
 <%@page import="models.Lop"%>
 <%@page import="models.sinhvien"%>
 <%@page import="models.giangvien"%>
 <%@page import="models.namhoc"%>
-
+<%@page import="models.hocky"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
@@ -18,12 +19,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sinh viên</h1>
+            <h1 class="m-0">Niên Khóa</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-              <li class="breadcrumb-item active">Sinh viên</li>
+              <li class="breadcrumb-item active">Niên Khóa</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -63,28 +64,22 @@
 	  <thead class="thead-CCFFFF">
 	    <tr class="list-header">
 	      <th scope="col">#</th>
-	      <th scope="col">Mã Sinh viên</th>
-	      <th scope="col">Tên Sinh viên</th>
-	      <th scope="col">Địa chỉ</th>
-	      <th scope="col">Số điện thoại</th>
-	      <th scope="col">Lớp</th>
+	      <th scope="col">Mã Niên Khóa</th>
+	      <th scope="col">Niên Khóa</th>
 	      <th scope="col">Chức năng</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	  <%
-	  if(request.getAttribute("sinhvienList") != null){
-		  List<sinhvien> sinhvienList = (List<sinhvien>) request.getAttribute("sinhvienList");
-		  if(sinhvienList.size() > 0){
-			  for(sinhvien objSV : sinhvienList){
+	  if(request.getAttribute("nienKhoaList") != null){
+		  List<NienKhoa> nienKhoaList = (List<NienKhoa>) request.getAttribute("nienKhoaList");
+		  if(nienKhoaList.size() > 0){
+			  for(NienKhoa objNK : nienKhoaList){
 				  %>
 		<tr class="tr-hover">
 	      <th scope="row"><input type="checkbox" name="vehicle1" value="Bike"></th>
-	      <td><%=objSV.getMaSV() %></td>
-	      <td><%=objSV.getTenSV() %></td>
-	      <td><%=objSV.getDiaChi() %></td>
-	      <td><%=objSV.getSdt() %></td>
-	      <td><%=objSV.getLop().getTenLop() %></td>
+	      <td><%=objNK.getMaNK() %></td>
+	      <td><%=objNK.getTenNK() %></td>
 	     <td>
 	    	<%-- <button type="button" class="btn btn-warning suaMenu" data-toggle="modal" data-target="#exampleModalSua">
 				<a href="<%=request.getContextPath()%>/admin/menu/edit?id=">Cập nhật</a>
@@ -109,54 +104,20 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Thêm sinh viên</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Thêm Niên Khóa</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action ="<%=request.getContextPath()%>/sinh-vien" method="post">
-        
+        <form action ="<%=request.getContextPath()%>/nien-khoa" method="post">
         	<div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Mã sinh viên</label>
-			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="masv">
+			    <label for="exampleFormControlFile1" class="col-sm-3">Mã Niên Khoa</label>
+			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="maNK">
 			  </div>
 			  <div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Tên sinh viên</label>
-			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="tensv">
-			  </div>
-			  <div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Địa chỉ</label>
-			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="diachi">
-			  </div>
-			  <div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Số điện thoại</label>
-			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="sdt">
-			  </div>
-			  <div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Email</label>
-			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="email">
-			  </div>
-			  <div class="form-group row">
-			    <label for="exampleFormControlFile1" class="col-sm-3">Lớp</label>
-			    <%
-			    	if(request.getAttribute("lopList") != null){
-			    		List<Lop> lopList = (List<Lop>) request.getAttribute("lopList");
-			    		if(lopList.size() > 0){
-			    			%>
-			    <select class="form-control" id="exampleFormControlSelect1" name="malop">
-			    <%
-			    	for(Lop objLop : lopList){
-			    		%>
-			    	<option value="<%=objLop.getMaLop()%>"><%=objLop.getTenLop()%></option>
-			    		<%
-			    	}
-			    %>
-			    </select>
-			    			<%
-			    		}
-			    	}
-			    %>
+			    <label for="exampleFormControlFile1" class="col-sm-3">Niên Khóa</label>
+			    <input type="text" class="form-control-file col-sm-8" id="exampleFormControlFile1" name="tenNK">
 			  </div>
 			<div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
