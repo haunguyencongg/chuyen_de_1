@@ -85,12 +85,14 @@
 	      <td><%=objSV.getDiaChi() %></td>
 	      <td><%=objSV.getSdt() %></td>
 	      <td><%=objSV.getLop().getTenLop() %></td>
-	     <td>
-	    	<%-- <button type="button" class="btn btn-warning suaMenu" data-toggle="modal" data-target="#exampleModalSua">
-				<a href="<%=request.getContextPath()%>/admin/menu/edit?id=">Cập nhật</a>
-			</button>
-	     	<button xoaMenu="" type="button" class="btn btn-danger">Xóa</button> --%>
-	     </td>
+		<td>
+		   <button type="button" class="btn btn-warning suaMenu" data-toggle="modal" data-target="#exampleModalSua"
+        onclick="editStudent(<%=objSV.getMaSV()%>, '<%=objSV.getTenSV()%>', '<%=objSV.getDiaChi()%>', <%=objSV.getSdt()%>, '<%=objSV.getEmail()%>', <%=objSV.getLop().getMaLop()%>)">
+        Sửa
+    </button>
+		    <button type="button" class="btn btn-danger" onclick="deleteStudent(<%=objSV.getMaSV()%>)">Xóa</button>
+		</td>
+
 	    </tr>
 				  <%
 			  }
@@ -167,7 +169,61 @@
     </div>
   </div>
 </div>
+<form action="<%=request.getContextPath()%>/sinh-vien" method="post">
+    <input type="hidden" name="action" value="edit">
+    <input type="hidden" id="editMaSV" name="masv">
+
+    <div class="form-group row">
+        <label for="editTenSV" class="col-sm-3">Tên sinh viên</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="editTenSV" name="tensv" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="editDiaChi" class="col-sm-3">Địa chỉ</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="editDiaChi" name="diachi" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="editSDT" class="col-sm-3">Số điện thoại</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="editSDT" name="sdt" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="editEmail" class="col-sm-3">Email</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="editEmail" name="email" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="editMaLop" class="col-sm-3">Lớp</label>
+        <div class="col-sm-9">
+            <select class="form-control" id="editMaLop" name="malop" required>
+                <!-- Lựa chọn các lớp từ danh sách lớp đã có -->
+                <% if(request.getAttribute("lopList") != null){
+                    List<Lop> lopList = (List<Lop>) request.getAttribute("lopList");
+                    if(lopList.size() > 0){
+                        for(Lop objLop : lopList){
+                %>
+                <option value="<%=objLop.getMaLop()%>"><%=objLop.getTenLop()%></option>
+                <%      }
+                    }
+                }
+                %>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    </div>
+</form>
   </div>
+  <!-- Trong modal sửa thông tin sinh viên -->
+
+  
  <script type="text/javascript">
   $(document).ready(function(){
 	  $("form").submit(function(event){
@@ -195,7 +251,41 @@
 		  })
 	  })
   }
+  
+
 </script>
+
+<script type="text/javascript">
+    function deleteStudent(maSV) {
+        if (confirm("Bạn có chắc chắn muốn xóa sinh viên này không?")) {
+            $.ajax({
+                type: "POST",
+                url: "<%=request.getContextPath()%>/sinh-vien?action=delete&masv=" + maSV,
+                success: function(data) {
+                    // Xử lý kết quả sau khi xóa thành công (nếu cần)
+                    location.reload(); // Cập nhật lại trang sau khi xóa
+                },
+                error: function() {
+                    alert("Đã xảy ra lỗi khi xóa sinh viên!");
+                }
+            });
+        }
+    }
+    function editStudent(maSV, tenSV, diaChi, sdt, email, maLop) {
+        // Điền thông tin sinh viên vào form sửa
+        $("#editMaSV").val(maSV);
+        $("#editTenSV").val(tenSV);
+        $("#editDiaChi").val(diaChi);
+        $("#editSDT").val(sdt);
+        $("#editEmail").val(email);
+        $("#editMaLop").val(maLop);
+
+        // Mở modal sửa
+        $("#exampleModalSua").modal("show");
+    }
+
+</script>
+
   <!-- /.content-wrapper -->
   <%@include file="/templates/admin/inc/footer.jsp" %>
 

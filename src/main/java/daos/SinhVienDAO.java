@@ -70,4 +70,53 @@ public class SinhVienDAO extends AbstractDAO{
 		return result;
 	}
 
+	public int delete(int masv) {
+		   con = DBConnectionUtils.getConnection();
+		   int result = 0;
+		   String sql = "DELETE FROM sinhvien WHERE maSV = ?";
+		   try {
+		      pst = con.prepareStatement(sql);
+		      pst.setInt(1, masv);
+		      result = pst.executeUpdate();
+		   } catch (SQLException e) {
+		      e.printStackTrace();
+		   }
+		   return result;
+		}
+	
+	 public int edit(sinhvien objSV) {
+	        con = DBConnectionUtils.getConnection();
+	        int result = 0;
+	        String sql = "UPDATE sinhvien SET tenSV=?, diaChi=?, sdt=?, email=?, maLop=? WHERE maSV=?";
+	        try {
+	            pst = con.prepareStatement(sql);
+	            pst.setString(1, objSV.getTenSV());
+	            pst.setString(2, objSV.getDiaChi());
+	            pst.setInt(3, objSV.getSdt());
+	            pst.setString(4, objSV.getEmail());
+	            pst.setInt(5, objSV.getLop().getMaLop());
+	            pst.setInt(6, objSV.getMaSV());
+
+	            result = pst.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            closeResources(); // Call the method to close resources
+	        }
+	        return result;
+	    }
+
+	    // Add this method to close resources (replace it with your actual resource-closing code)
+	    private void closeResources() {
+	        try {
+	            if (pst != null) {
+	                pst.close();
+	            }
+	            if (con != null) {
+	                con.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 }
